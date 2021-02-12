@@ -29,13 +29,15 @@
 
     const unsub = followers.subscribe(value => {
 
-        if (!process.browser) return;
+        // if (!process.browser) return;
 
-        anime({
-            ...animeInfo,
-            num: [animFollowers, value],
-            duration: 500
-        });
+        // anime({
+        //     ...animeInfo,
+        //     num: [animFollowers, value],
+        //     duration: 500
+        // });
+
+        animFollowers = value;
     });
 
     onDestroy(unsub);

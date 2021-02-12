@@ -11,29 +11,29 @@
     export let change: Writable<number>;
 
 // Just temporary because svelte is a dick
-    let animTarget = {
-        num: 0
-    }
+    // let animTarget = {
+    //     num: 0
+    // }
 
-    let animChange = 0;
+    // let animChange = 0;
 
-    const unsub = change.subscribe(value => {
+    // const unsub = change.subscribe(value => {
 
-        if (!process.browser) return;
+    //     if (!process.browser) return;
 
-        anime({
-            targets: animTarget,
-            num: [animChange, value],
-            duration: 500,
-            round: 1,
-            easing: "easeOutCirc",
-            update() {
-                animChange = animTarget.num;
-            }
-        });
-    });
+    //     anime({
+    //         targets: animTarget,
+    //         num: [animChange, value],
+    //         duration: 500,
+    //         round: 1,
+    //         easing: "easeOutCirc",
+    //         update() {
+    //             animChange = animTarget.num;
+    //         }
+    //     });
+    // });
 
-    onDestroy(unsub);
+    // onDestroy(unsub);
 
 </script>
 
@@ -66,5 +66,5 @@
         <img src={upArrowIcon} alt="Up Arrow" />
     {/if}
 
-    <span class="text">{Math.abs(animChange)} Today</span>
+    <span class="text">{Math.abs($change)} Today</span>
 </div>
