@@ -23,6 +23,18 @@
         p {
             font-size: 14px;
         }
+
+        .divider {
+            display: none;
+
+            width: 100%;
+            height: 1px;
+
+            margin-top: 10px;
+            margin-bottom: 8px;
+
+            filter: blur(1px);
+        }
     }
 </style>
 
@@ -31,5 +43,6 @@
         <h2>Social Media Dashboard</h2>
         <p>Total Followers: {totalFollowers.toLocaleString('en-US')}</p>
     </div>
+    <div class="divider"></div>
     <ThemeSwitch />
 </div>
