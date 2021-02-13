@@ -52,12 +52,15 @@
         box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.15);
     }
 
+    .divider {
+        background-color: $lightSecondaryText;
+    }
+
     main {
+        min-height: 100vh;
         padding: 30px 100px;
 
         background-color: $lightBg;
-        width: 100vw;
-        height: 100vh;
 
         font-family: 'Inter', sans-serif;
 
@@ -87,6 +90,46 @@
             .card {
                 background-color: $darkCardBg;
             }
+
+            .divider {
+                background-color: $darkSecondaryText;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        main {
+            padding: 30px 30px;
+        }
+
+        .dashboard {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: repeat(4, auto);
+            row-gap: 20px;
+        }
+
+        .card {
+            width: initial !important;
+        }
+
+        .header {
+            display: block !important;
+        }
+
+        .header .title h2 {
+            font-size: 1rem !important;
+        }
+
+        .header .title p {
+            font-size: 0.7rem !important;
+        }
+
+        .header .divider {
+            display: block !important;
+        }
+
+        .theme-switch {
+            justify-content: space-between !important;
         }
     }
 </style>

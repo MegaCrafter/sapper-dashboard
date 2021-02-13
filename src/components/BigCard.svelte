@@ -1,154 +1,154 @@
 <script lang="ts">
-    import { onMount, onDestroy } from "svelte";
+import { onMount, onDestroy } from "svelte";
 
-    import anime from "animejs/lib/anime.es.js";
+import anime from "animejs/lib/anime.es.js";
 
-    import { trim } from "./information";
-    import type { BigCardInfo } from "./information";
-    import Change from "./Change.svelte";
+import { trim } from "./information";
+import type { BigCardInfo } from "./information";
+import Change from "./Change.svelte";
 
-    export let info: BigCardInfo;
+export let info: BigCardInfo;
 
-    let {type, icon, handle, followers, change} = info;
+let {type, icon, handle, followers, change} = info;
 
-    // Just temporary because svelte is a dick
-    let animTarget = {
-        num: 0
+// Just temporary because svelte is a dick
+let animTarget = {
+    num: 0
+}
+
+let animFollowers = 0;
+
+let animeInfo = {
+    targets: animTarget,
+    round: 1,
+    easing: "easeOutCirc",
+    update() {
+        animFollowers = animTarget.num;
     }
+}
 
-    let animFollowers = 0;
+const unsub = followers.subscribe(value => {
 
-    let animeInfo = {
-        targets: animTarget,
-        round: 1,
-        easing: "easeOutCirc",
-        update() {
-            animFollowers = animTarget.num;
-        }
-    }
+    // if (!process.browser) return;
 
-    const unsub = followers.subscribe(value => {
+    // anime({
+    //     ...animeInfo,
+    //     num: [animFollowers, value],
+    //     duration: 500
+    // });
 
-        // if (!process.browser) return;
+    animFollowers = value;
+});
 
-        // anime({
-        //     ...animeInfo,
-        //     num: [animFollowers, value],
-        //     duration: 500
-        // });
+onDestroy(unsub);
 
-        animFollowers = value;
+onMount(() => {
+    anime({
+        ...animeInfo,
+        num: $followers,
+        duration: 4000,
     });
-
-    onDestroy(unsub);
-
-    onMount(() => {
-        anime({
-            ...animeInfo,
-            num: $followers,
-            duration: 4000,
-        });
-    });
+});
 
 </script>
 
 <style lang="scss">
-    @import "../style/theme.scss";
+@import "../style/theme.scss";
 
-    .card {
-        padding-top: 30px;
-        padding-bottom: 20px;
+.card {
+    padding-top: 30px;
+    padding-bottom: 20px;
 
-        cursor: pointer;
+    cursor: pointer;
 
-        position: relative;
+    position: relative;
 
-        display: flex;
-        flex-direction: column;
+    display: flex;
+    flex-direction: column;
 
-        justify-content: space-around;
-        align-items: center;
+    justify-content: space-around;
+    align-items: center;
 
-        width: 280px;
-        height: 270px;
+    width: 280px;
+    height: 270px;
 
-        border-radius: 5px;
+    border-radius: 5px;
 
-        overflow: hidden;
+    overflow: hidden;
 
-        transition: 0.3s;
+    transition: 0.3s;
 
-        & .top-line {
+    & .top-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+
+        height: 5px;
+
+        &::after {
+            content: '';
             position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
+            left: -0px;
+            right: -0px;
+            top: -0px;
+            bottom: -0px;
 
-            height: 5px;
+            background: inherit;
 
-            &::after {
-                content: '';
-                position: absolute;
-                left: -0px;
-                right: -0px;
-                top: -0px;
-                bottom: -0px;
-
-                background: inherit;
-
-                filter: blur(5px);
-            }
-        }
-
-        &.facebook .top-line {
-            background: $facebookColor;
-        }
-
-        &.twitter .top-line {
-            background: $twitterColor;
-        }
-
-        &.instagram .top-line {
-            background: $instagramColor;
-        }
-
-        &.youtube .top-line {
-            background: $youtubeColor;
-        }
-
-        .handle {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            column-gap: 10px;
-
-            .handle-icon {
-                width: 25px;
-            }
-        }
-
-        .number {
-            font-size: 4rem;
-        }
-
-        .descriptor {
-            font-weight: 400;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            font-size: 1rem;
-
-            margin-top: -30px;
-        }
-
-        &:hover {
-            filter: brightness(95%);
-            
-            :global(.darkMode) & {
-                filter: brightness(150%);
-            }
+            filter: blur(5px);
         }
     }
+
+    &.facebook .top-line {
+        background: $facebookColor;
+    }
+
+    &.twitter .top-line {
+        background: $twitterColor;
+    }
+
+    &.instagram .top-line {
+        background: $instagramColor;
+    }
+
+    &.youtube .top-line {
+        background: $youtubeColor;
+    }
+
+    .handle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        column-gap: 10px;
+
+        .handle-icon {
+            width: 25px;
+        }
+    }
+
+    .number {
+        font-size: 4rem;
+    }
+
+    .descriptor {
+        font-weight: 400;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        font-size: 1rem;
+
+        margin-top: -30px;
+    }
+
+    &:hover {
+        filter: brightness(95%);
+        
+        :global(.darkMode) & {
+            filter: brightness(150%);
+        }
+    }
+}
 </style>
 
 <div class="card {type}">
