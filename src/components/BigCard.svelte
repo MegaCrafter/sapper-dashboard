@@ -27,20 +27,30 @@ let animeInfo = {
     }
 }
 
+let div;
+
 const unsub = followers.subscribe(value => {
-
-    // if (!process.browser) return;
-
-    // anime({
-    //     ...animeInfo,
-    //     num: [animFollowers, value],
-    //     duration: 500
-    // });
-
     animFollowers = value;
 });
 
-onDestroy(unsub);
+const animUnsub = followers.animSubscribe(value => {
+    if (!process.browser) return;
+
+    anime({
+        targets: div,
+        keyframes: [
+            {translateY: -40, scale: 1.1},
+            {translateY: 0, scale: 1}
+        ],
+        duration: 300,
+        easing: "easeOutQuad"
+    });
+});
+
+onDestroy(() => {
+    unsub();
+    animUnsub();
+});
 
 onMount(() => {
     anime({
@@ -77,6 +87,8 @@ onMount(() => {
     overflow: hidden;
 
     transition: 0.3s;
+
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.15);
 
     & .top-line {
         position: absolute;
@@ -151,7 +163,7 @@ onMount(() => {
 }
 </style>
 
-<div class="card {type}">
+<div class="card {type}" bind:this={div}>
     <span class="top-line"></span>
 
     <div class="handle">
@@ -162,9 +174,9 @@ onMount(() => {
     <h1 class="number">{trim(animFollowers)}</h1>
             
     {#if type === "youtube"}
-        <h3 class="descriptor">Subscribers</h3>
+        <span class="descriptor">Subscribers</span>
     {:else}
-        <h3 class="descriptor">Followers</h3>
+        <span class="descriptor">Followers</span>
     {/if}
 
     <Change change={change} />
