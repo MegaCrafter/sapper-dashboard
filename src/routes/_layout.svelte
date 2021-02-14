@@ -13,6 +13,10 @@
         user-select: none;
     }
 
+    body {
+        min-width: 310px;
+    }
+
     h1, h2 {
         color: $lightPrimaryText;
     }
@@ -31,9 +35,9 @@
 
     .top-overlay {
         position: absolute;
-        width: 100vw;
         height: 30vh;
         left: 0;
+        right: 0;
         top: 0;
 
         border-bottom-left-radius: 10px;
@@ -57,7 +61,7 @@
 
     main {
         min-height: 100vh;
-        padding: 30px 100px;
+        padding: 30px 4vw;
 
         background-color: $lightBg;
 
@@ -96,19 +100,26 @@
         }
     }
 
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 1280px) {
         main {
             padding: 30px 30px;
         }
 
         .dashboard {
-            grid-template-columns: 1fr !important;
-            grid-template-rows: repeat(4, auto);
-            row-gap: 20px;
+            grid-template-columns: repeat(2, 1fr) !important;
+            grid-template-rows: repeat(2, auto) !important;
+            gap: 20px;
         }
 
         .card {
             width: initial !important;
+        }
+    }
+
+    @media screen and (max-width: 650px) {
+        .dashboard {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: repeat(4, auto) !important;
         }
 
         .header {
