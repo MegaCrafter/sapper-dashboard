@@ -46,11 +46,15 @@
         align-items: center;
 
         column-gap: 10px;
-
-        color: $limegreen;
+        
+        &, & .text {
+            color: $limegreen;
+        }
 
         &.decrement {
-            color: $brightred;
+            &, & .text {
+                color: $brightred;
+            }
         }
     }
 
